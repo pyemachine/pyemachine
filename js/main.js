@@ -77,14 +77,26 @@ document.addEventListener('DOMContentLoaded', function () {
         observer.observe(item);
     });
 
+    // Set gallery top padding based on actual nav height
+    function setGalleryPadding() {
+        const nav = document.querySelector('.top-nav');
+        const gallerySection = document.querySelector('.gallery-section');
+        const navHeight = nav.offsetHeight;
+        gallerySection.style.paddingTop = (navHeight + 20) + 'px';
+    }
+
     // Initial layout
+    setGalleryPadding();
     layoutMasonry();
 
     // Re-layout on window resize
     let resizeTimer;
     window.addEventListener('resize', function () {
         clearTimeout(resizeTimer);
-        resizeTimer = setTimeout(layoutMasonry, 100);
+        resizeTimer = setTimeout(function() {
+            setGalleryPadding();
+            layoutMasonry();
+        }, 100);
     });
 
 });
